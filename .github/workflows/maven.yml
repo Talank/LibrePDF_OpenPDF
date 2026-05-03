@@ -1,16 +1,21 @@
 name: OpenPDF Maven Build
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 permissions:
   contents: read
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        java: [21, 24, 25, '26-ea'] 
+        java: [21, 24, 25, '26-ea']
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+      fail-fast: false
     name: Build with Java ${{ matrix.java }}
     steps:
       - uses: actions/checkout@v5
