@@ -47,7 +47,7 @@ class FontTest {
 
     @BeforeAll
     static void beforeAll() {
-        FontFactory.registerDirectories();
+        // FontFactory.registerDirectories();
     }
 
     /**
