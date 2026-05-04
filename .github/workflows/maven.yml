@@ -27,6 +27,7 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Check Maven version and directory contents
+        shell: bash
         run: |
           mvn -v
           echo "** ls **"
