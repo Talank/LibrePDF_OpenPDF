@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import org.openpdf.text.Font;
 import org.openpdf.text.FontFactory;
-import com.lowagie.text.ExceptionConverter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
