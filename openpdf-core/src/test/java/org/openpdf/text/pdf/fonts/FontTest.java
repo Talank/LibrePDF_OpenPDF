@@ -1,6 +1,7 @@
 package org.openpdf.text.pdf.fonts;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -84,7 +85,15 @@ class FontTest {
     @ParameterizedTest(name = "Style {0}")
     @MethodSource("getStyles")
     void testFontStyleOfStyledFont(int style) {
-        final Font font = FontFactory.getFont(FONT_NAME_WITH_STYLES, DEFAULT_FONT_SIZE, style);
+        final Font font;
+        try {
+            font = FontFactory.getFont(FONT_NAME_WITH_STYLES, DEFAULT_FONT_SIZE, style);
+            assumeTrue(font.getBaseFont() != null || font.getFamily() != Font.UNDEFINED,
+                    "Skipping: font '" + FONT_NAME_WITH_STYLES + "' could not be loaded with required tables on this OS");
+        } catch (Exception e) {
+            assumeTrue(false, "Skipping: font '" + FONT_NAME_WITH_STYLES + "' unavailable on this OS: " + e.getMessage());
+            return;
+        }
 
         // For the font Courier, there is no Courier-Underline or Courier-Strikethrough font available.
         if (style == Font.UNDERLINE || style == Font.STRIKETHRU) {
