@@ -2,15 +2,17 @@ name: OpenPDF Maven Build
 
 on:
   workflow_dispatch:
+  push:
 
 permissions:
   contents: read
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
         java: [21, 24, 25, 26, '27-ea'] 
     name: Build with Java ${{ matrix.java }}
     steps:
@@ -23,6 +25,7 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Check Maven version and directory contents
+        shell: bash
         run: |
           mvn -v
           echo "** ls **"
