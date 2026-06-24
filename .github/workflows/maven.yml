@@ -28,10 +28,20 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Check Maven version and directory contents
+        if: runner.os != 'Windows'
         run: |
           mvn -v
           echo "** ls **"
           pwd && ls -l
 
+      - name: Check Maven version and directory contents
+        if: runner.os == 'Windows'
+        run: |
+          mvn -v
+          echo "** ls **"
+          pwd
+          dir
+
       - name: Build with Maven
+        if: runner.os != 'macOS'
         run: mvn -B install --file pom.xml
