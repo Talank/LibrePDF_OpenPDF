@@ -32,13 +32,6 @@ jobs:
           mvn -v
           echo "** ls **"
           pwd && ls -l
-        shell: bash
 
       - name: Build with Maven
-        if: runner.os != 'macOS'
         run: mvn -B install --file pom.xml
-
-      - name: Build with Maven (macOS - skip broken system font tests)
-        if: runner.os == 'macOS'
-        run: mvn -B install --file pom.xml '-Dsurefire.excludes=org.openpdf.text.pdf.fonts.FontTest'
-        shell: bash
